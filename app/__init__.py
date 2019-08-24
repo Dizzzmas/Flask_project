@@ -8,6 +8,7 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 
 app = Flask(__name__)               # Flask object
@@ -17,7 +18,8 @@ migrate = Migrate(app, db)          # Database migration
 login = LoginManager(app)           # Login_manager
 login.login_view = "login"          # login_page
 mail = Mail(app)                    # Mailing
-bootstrap = Bootstrap(app)
+bootstrap = Bootstrap(app)          # Css framework bootstrap
+moment = Moment(app)                # Moment.js for configuring date and time
 
 if not app.debug:
     if app.config["MAIL_SERVER"]:                                       # Configure smtp handler

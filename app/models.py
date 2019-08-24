@@ -80,6 +80,7 @@ class User(UserMixin, db.Model):                            # Database user mode
             return
         return User.query.get(id)
 
+
 class Post(db.Model):                               # Post db model
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
