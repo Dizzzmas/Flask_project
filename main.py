@@ -1,5 +1,6 @@
 from app import app, db
 from app.models import Post, User
+from app import cli
 
 
 @app.shell_context_processor

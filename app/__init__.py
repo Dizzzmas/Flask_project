@@ -9,6 +9,9 @@ import os
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_babel import Babel
+from flask import request
+from flask_babel import lazy_gettext as _l
 
 
 app = Flask(__name__)               # Flask object
@@ -17,9 +20,11 @@ db = SQLAlchemy(app)                # Database
 migrate = Migrate(app, db)          # Database migration
 login = LoginManager(app)           # Login_manager
 login.login_view = "login"          # login_page
+login.login_message = _l("Please login to access this page.")
 mail = Mail(app)                    # Mailing
 bootstrap = Bootstrap(app)          # Css framework bootstrap
 moment = Moment(app)                # Moment.js for configuring date and time
+babel = Babel(app)                  # Flask-babel for internationalization and localization
 
 if not app.debug:
     if app.config["MAIL_SERVER"]:                                       # Configure smtp handler
@@ -47,5 +52,9 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info("My website for learning flask")
 
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 from app import routes, models, errors
